@@ -8,26 +8,17 @@
                 Danh bạ
                 <i class="fas fa-address-book"></i>
             </h4>
-            <ContactList
-                v-if="filteredContactsCount > 0"
-                :contacts="filteredContacts"
-                v-model:activeIndex="activeIndex"
-            />
+            <ContactList v-if="filteredContactsCount > 0" :contacts="filteredContacts" v-model:activeIndex="activeIndex" />
             <p v-else>Không có liên hệ nào.</p>
 
             <div class="mt-3 row justify-content-around align-items-center">
                 <button class="btn btn-sm btn-primary" @click="refreshList()">
                     <i class="fas fa-redo"></i> Làm mới
                 </button>
-
                 <button class="btn btn-sm btn-success" @click="goToAddContact">
                     <i class="fas fa-plus"></i> Thêm mới
                 </button>
-
-                <button
-                    class="btn btn-sm btn-danger"
-                    @click="removeAllContacts"
-                >
+                <button class="btn btn-sm btn-danger" @click="removeAllContacts">
                     <i class="fas fa-trash"></i> Xóa tất cả
                 </button>
             </div>
@@ -52,11 +43,10 @@ import ContactService from "@/services/contact.service";
 
 export default {
     components: {
-    ContactCard,
-    InputSearch,
-    ContactList,
+        ContactCard,
+        InputSearch,
+        ContactList,
     },
-    
     data() {
         return {
             contacts: [],
@@ -65,14 +55,11 @@ export default {
         };
     },
     watch: {
-        // Giám sát các thay đổi của biến searchText.
-        // Bỏ chọn phần tử đang được chọn trong danh sách.
         searchText() {
             this.activeIndex = -1;
         },
     },
     computed: {
-        // Chuyển các đối tượng contact thành chuỗi để tiện cho tìm kiếm.
         contactStrings() {
             return this.contacts.map((contact) => {
                 const { name, email, address, phone } = contact;
@@ -87,12 +74,12 @@ export default {
         },
         activeContact() {
             if (this.activeIndex < 0) return null;
-                return this.filteredContacts[this.activeIndex];
+            return this.filteredContacts[this.activeIndex];
         },
         filteredContactsCount() {
             return this.filteredContacts.length;
         },
-    },    
+    },
     methods: {
         async retrieveContacts() {
             try {
@@ -101,7 +88,6 @@ export default {
                 console.log(error);
             }
         },
-
         refreshList() {
             this.retrieveContacts();
             this.activeIndex = -1;
@@ -116,20 +102,20 @@ export default {
                 }
             }
         },
-
+        
         goToAddContact() {
             this.$router.push({ name: "contact.add" });
         },
     },
     mounted() {
         this.refreshList();
-    },    
+    },
 };
 </script>
 
 <style scoped>
-    .page {
-        text-align: left;
-        max-width: 750px;
-    } 
+.page {
+    text-align: left;
+    max-width: 750px;
+}
 </style>
